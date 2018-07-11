@@ -3,7 +3,7 @@ import sys
 from subprocess import call
 
 from cytomine import CytomineJob
-from cytomine.models import Annotation, Job, ImageInstanceCollection, AnnotationCollection
+from cytomine.models import Annotation, Job, ImageGroupCollection, AnnotationCollection,AttachedFile
 from workflow import workflow
 #from shapely.affinity import affine_transform
 #from skimage import io
@@ -44,22 +44,30 @@ def main(argv):
             input_image.download(os.path.join(in_path, "{id}.tif"))
 
         for gt_image in gt_images:
-            related_name = gt_image.originalFilename.replace(gt_suffix, '')
-            related_image = [i for i in input_images if related_name == i.originalFilename]
+            related_name = gt_image.name.replace(gt_suffix, '')
+            related_image = [i for i in input_images if related_name == i.name]
             if len(related_image) == 1:
                 gt_image.download(os.path.join(gt_path, "{}.tif".format(related_image[0].id)))
 
         # 3. Call the image analysis workflow using the run script
         cj.job.update(progress=25, statusComment="Launching workflow...")
-        #command = "" \
-#                  "-macro macro.ijm \"input={}, output={}\"".format(in_path, out_path)
-        #return_code = call(command, shell=True, cwd="/fiji")  # waits for the subprocess to return
+#TODO: error handling
         workflow(in_path, out_path)
 
 #        if return_code != 0:
 #           err_desc = "Failed to execute the ImageJ macro (return code: {})".format(return_code)
 #           cj.job.update(progress=50, statusComment=err_desc)
 #            raise ValueError(err_desc)
+
+        # 4. Upload .swc and attach to correponding image
+# ! not needed if we compute directly the metric
+        for image in cj.monitor(input_images, start=60, end=80, period=0.1, prefix="Extracting and uploading polygons from masks"):
+            afile = "{}.swc".format(image.id)
+            path = os.path.join(out_path, afile)
+            AttachedFile(   image,
+                            filename=path
+                        ).upload()
+         
 
         # 4. Upload the annotation and labels to Cytomine (annotations are extracted from the mask using
         # the AnnotationExporter module)

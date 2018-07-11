@@ -1,11 +1,11 @@
 {
-    "name": "NeuronTracing-ImageJ",
+    "name": "NeuronTracing_vaa3d",
     "container-image": {
-        "image": "/nucleisegmentation_imagej",
+        "image": "neubiaswg5/w_neurontracing_vaa3d",
         "type": "singularity"
     },
     "schema-version": "cytomine-0.1",
-    "description": "Segment clustered nuclei using a laplacian filter, thresholding and a binary watershed transform",
+    "description": "trace neuron with vaa3d 'app2' algorithm",
     "command-line": "python wrapper.py CYTOMINE_HOST CYTOMINE_PUBLIC_KEY CYTOMINE_PRIVATE_KEY CYTOMINE_ID_PROJECT CYTOMINE_ID_SOFTWARE",
     "inputs": [
         {
@@ -33,7 +33,7 @@
             "value-key": "@ID",
             "command-line-flag": "--@id",
             "name": "Cytomine private key",
-            "description": "Cytomine private key",
+            "description": "Cytomine private key",      
             "type": "String",
             "optional": false,
             "set-by-server": true

@@ -201,9 +201,13 @@ def swc_to_tiff_stack(file_name, output_path, im_size,\
         if index < 2:
             continue
         C = SWC[index]
+        parentPointIndex=C[4]
+        #
+        if parentPointIndex==-1:
+            continue
         #print C
         #print SWC
-        P = SWC[C[4]] # C[4] is parent index
+        P = SWC[parentPointIndex] # C[4] is parent index
     
         #compute the Bresenham 3d Line between 2 point
         #substract with the min(x/y/z) to avoid negative coordinate so it will be easier to fill up the numpy matrix        
@@ -216,8 +220,8 @@ def swc_to_tiff_stack(file_name, output_path, im_size,\
         min_point_z = min(P[2]-min_z, C[2]-min_z)
         max_point_z = max(P[2]-min_z, C[2]-min_z)
         
-        print('Point 1 {},{},{}'.format(P[0], P[1], P[2]))
-        print('Point 2 {},{},{}'.format(C[0], C[1], C[2]))
+        #print('Point 1 {},{},{}'.format(P[0], P[1], P[2]))
+        #print('Point 2 {},{},{}'.format(C[0], C[1], C[2]))
         #print('min_point_x:{} max_point_x:{} min_point_y:{} max_point_y:{} min_point_z:{} max_point_z:{}').format(min_point_x,max_point_x,min_point_y,max_point_y,min_point_z,max_point_z)
         
         #Check which x/y/z is the smaller and which one is the bigger

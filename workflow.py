@@ -36,8 +36,8 @@ def workflow(in_images, out_path):
         #os.system(command)
         print("Runned :"+command)
         #im_size = imgio.imread(os.path.join(out_path, filename)).shape
-        im_size = imgio.imread(out_file_path).shape
-        im_size = im_size[::-1]
+        im_size = imgio.volread(out_file_path).shape #Size is Depth,Height,Width
+        im_size = im_size[::-1] #Invert the size order to Width,Height,Depth
         print(im_size)
         #Rename the swc file form *.tif_ini.swc to *.swc
         #Needed for some vaa3d workflow where the output path is not taken into account.

@@ -5,6 +5,7 @@ RUN tar -xvzf Vaa3D_CentOS_64bit_v3.458.tar.gz
 
 ADD wrapper.py /app/wrapper.py
 ADD workflow.py /app/workflow.py
+ADD swc_to_tiff_stack.py /app/swc_to_tiff_stack.py 
 
 RUN apt-get update
 RUN apt-get install -y \

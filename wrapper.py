@@ -1,4 +1,6 @@
 import sys
+import os
+import glob
 from subprocess import call
 from cytomine.models import Job
 from neubiaswg5 import CLASS_TRETRC
@@ -16,27 +18,32 @@ def main(argv):
         in_images, gt_images, in_path, gt_path, out_path, tmp_path = prepare_data(problem_cls, nj, is_2d=is_2d, **nj.flags)
         # 3. Call the image analysis workflow using the run script
         nj.job.update(progress=25, statusComment="Launching workflow...")
-        #workflow(in_path,out_path)
-        workflow(in_images, out_path)
-        #shArgs = ["python ", "/app/workflow.py ", in_path, out_path]
-        #return_code = call(" ".join(shArgs), shell=True, cwd="./")
-        #command = "python /workflow.py" \"\"input={},output={}\"\".format(in_path, out_path)
-        #return_code = call(command, shell=True, cwd="/")  # waits for the subprocess to return
+        workflow(in_images,out_path)
+
         #if return_code != 0:
-        #    err_desc = "Failed to execute the Vaa3D (return code: {})".format(return_code)
-        #    nj.job.update(progress=50, statusComment=err_desc)
+        #   err_desc = "Failed to execute the Vaa3D (return code: {})".format(return_code)
+        #nj.job.update(progress=50, statusComment=err_desc)
         #    raise ValueError(err_desc)       
         # 4. Upload the annotation and labels to Cytomine (annotations are extracted from the mask using
         # the AnnotationExporter module)
-        # upload_data(problem_cls, nj, in_images, out_path, **nj.flags, is_2d=is_2d, monitor_params={
+        files = (glob.glob(in_path+"/*.tif"))
+        print('Removing flipped images...')
+        for i in range(0,len(files)):
+            files[i] = files[i].replace('in','out')
+            print(files[i])
+
+        for out_file in files:
+            os.remove(out_file)
+
+        #upload_data(problem_cls, nj, in_images, out_path, **nj.flags, is_2d=is_2d, monitor_params={
         #     "start": 60, "end": 90,
         #     "period": 0.1,
         #     "prefix": "Extracting and uploading polygons from masks"
         # })
         # # 5. Compute and upload the metrics
-        # nj.job.update(progress=80, statusComment="Computing and uploading metrics (if necessary)...")
+        #nj.job.update(progress=80, statusComment="Computing and uploading metrics (if necessary)...")
         # upload_metrics(problem_cls, nj, in_images, gt_path, out_path, tmp_path, **nj.flags)
-        # nj.job.update(status=Job.TERMINATED, progress=100, statusComment="Finished.")
+        #nj.job.update(status=Job.TERMINATED, progress=100, statusComment="Finished.")
 if __name__ == "__main__":
     main(sys.argv[1:])
 

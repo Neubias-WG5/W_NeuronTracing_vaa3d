@@ -32,7 +32,7 @@ def workflow(in_images, out_path):
         command = "/usr/bin/xvfb-run Vaa3D_CentOS_64bit_v3.458/vaa3d -x libvn2 -f app2 -i " + \
             out_file_path + " -o " + out_file_path[:-4]+ ".swc"
         return_code = call(command, shell=True, cwd="/") # waits for the subprocess to return
-        time.sleep(2)#Wait 2 seconds because it can't process all the images for some reason
+        time.sleep(10)#Wait 10 seconds because it can't process all the images for some reason
         #os.system(command)
         print("Runned :"+command)
         #im_size = imgio.imread(os.path.join(out_path, filename)).shape
@@ -41,7 +41,7 @@ def workflow(in_images, out_path):
         print(im_size)
         #Rename the swc file form *.tif_ini.swc to *.swc
         #Needed for some vaa3d workflow where the output path is not taken into account.
-        os.rename(out_file_path[:-4]+".tif_ini.swc", out_file_path[:-4]+ ".swc")
+        #os.rename(out_file_path[:-4]+".tif_ini.swc", out_file_path[:-4]+ ".swc")
         print("Run:"+' swc_to_tiff_stack('+ out_file_path[:-4] +'.swc, '+ out_path +','+ str(im_size)+')')
         
         # Convert the .swc tracing result to tiff stack files

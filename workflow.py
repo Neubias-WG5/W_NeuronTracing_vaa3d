@@ -29,7 +29,7 @@ def workflow(in_images, out_path):
         print("Runned :"+command)
         #Compute the neuron tracing
         
-        command = "/usr/bin/xvfb-run Vaa3D_CentOS_64bit_v3.458/vaa3d -x libvn2 -f app2 -i " + \
+        command = "/usr/bin/xvfb-run Vaa3D_CentOS_64bit_v3.458/vaa3d -x libvn2 -f app1 -i " + \
             out_file_path + " -o " + out_file_path[:-4]+ ".swc"
         return_code = call(command, shell=True, cwd="/") # waits for the subprocess to return
         time.sleep(10)#Wait 10 seconds because it can't process all the images for some reason

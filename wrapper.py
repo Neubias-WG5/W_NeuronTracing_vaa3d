@@ -29,7 +29,7 @@ def main(argv):
         files = (glob.glob(in_path+"/*.tif"))
         print('Removing flipped images...')
         for i in range(0,len(files)):
-            files[i] = files[i].replace('in','out')
+            files[i] = files[i].replace('/in/','/out/')
             print(files[i])
 
         for out_file in files:

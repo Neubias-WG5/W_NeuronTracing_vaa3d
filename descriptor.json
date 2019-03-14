@@ -5,7 +5,7 @@
         "type": "singularity"
     },
     "schema-version": "cytomine-0.1",
-    "description": "trace neuron with vaa3d 'app2' algorithm",
+    "description": "trace neuron with vaa3d 'app1' algorithm",
     "command-line": "python wrapper.py CYTOMINE_HOST CYTOMINE_PUBLIC_KEY CYTOMINE_PRIVATE_KEY CYTOMINE_ID_PROJECT CYTOMINE_ID_SOFTWARE",
     "inputs": [
         {

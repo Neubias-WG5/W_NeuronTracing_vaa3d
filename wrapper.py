@@ -24,8 +24,7 @@ def main(argv):
         #   err_desc = "Failed to execute the Vaa3D (return code: {})".format(return_code)
         #nj.job.update(progress=50, statusComment=err_desc)
         #    raise ValueError(err_desc)       
-        # 4. Upload the annotation and labels to Cytomine (annotations are extracted from the mask using
-        # the AnnotationExporter module)
+        
         files = (glob.glob(in_path+"/*.tif"))
         print('Removing flipped images...')
         for i in range(0,len(files)):
@@ -34,16 +33,19 @@ def main(argv):
 
         for out_file in files:
             os.remove(out_file)
+       
+        # 4. Upload the annotation and labels to Cytomine (annotations are extracted from the mask using
+        # the AnnotationExporter module
+        upload_data(problem_cls, nj, in_images, out_path, **nj.flags, is_2d=is_2d, monitor_params={
+                    "start": 60, "end": 90,
+                    "period": 0.1,
+                    "prefix": "Extracting and uploading polygons from masks"
+        })
+        #5. Compute and upload the metrics
+        nj.job.update(progress=80, statusComment="Computing and uploading metrics (if necessary)...")
+        upload_metrics(problem_cls, nj, in_images, gt_path, out_path, tmp_path, **nj.flags)
+        nj.job.update(status=Job.TERMINATED, progress=100, statusComment="Finished.")
 
-        #upload_data(problem_cls, nj, in_images, out_path, **nj.flags, is_2d=is_2d, monitor_params={
-        #     "start": 60, "end": 90,
-        #     "period": 0.1,
-        #     "prefix": "Extracting and uploading polygons from masks"
-        # })
-        # # 5. Compute and upload the metrics
-        #nj.job.update(progress=80, statusComment="Computing and uploading metrics (if necessary)...")
-        # upload_metrics(problem_cls, nj, in_images, gt_path, out_path, tmp_path, **nj.flags)
-        #nj.job.update(status=Job.TERMINATED, progress=100, statusComment="Finished.")
 if __name__ == "__main__":
     main(sys.argv[1:])
 

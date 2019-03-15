@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install openjdk-8-jdk -y && apt-get clean
 
 # Get DiademMetric.jar and JSAP-2.1.jar files to compute DIADEM metric
 RUN chmod +x /neubiaswg5-utilities/bin/*
-RUN cp /neubiaswg5-utilitities/bin/* /usr/bin/
+RUN cp /neubiaswg5-utilities/bin/* /usr/bin/
 # RUN cp /neubiaswg5-utilities/bin/DiademMetric.jar /usr/bin/ && cp /neubiaswg5-utilities/bin/JSAP-2.1.jar /usr/bin/ 
 RUN rm -r /neubiaswg5-utilities
 # --------------------------------------------------------------------------------------------

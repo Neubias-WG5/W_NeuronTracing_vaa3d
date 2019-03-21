@@ -40,7 +40,7 @@ def main(argv):
                     "start": 60, "end": 90,
                     "period": 0.1,
                     "prefix": "Extracting and uploading polygons from masks"
-        })
+        }
         #5. Compute and upload the metrics
         nj.job.update(progress=80, statusComment="Computing and uploading metrics (if necessary)...")
         upload_metrics(problem_cls, nj, in_images, gt_path, out_path, tmp_path, **nj.flags)

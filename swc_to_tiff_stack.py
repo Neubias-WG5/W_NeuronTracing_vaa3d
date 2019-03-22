@@ -246,7 +246,7 @@ def swc_to_tiff_stack(file_name, output_path, im_size,\
     #Fill the matrix with the line pixels for a value of 255
     image_array[rr, cc, dd] = 255 #1   
     image_array = np.moveaxis(image_array,2,0)
-    imageio.volwrite(os.path.join(output_path, file_name[:-4] + '_lbl.tif'), image_array)
+    imageio.volwrite(os.path.join(output_path, file_name[:-4] + '.tif'), image_array)
     #imwrite(output_path+'result_vaa3d.tif', image_array, is_2d=False
  
     #for z in range(0,zDimension):

@@ -15,7 +15,7 @@ RUN git clone https://github.com/cytomine-uliege/Cytomine-python-client.git && \
 # Install Neubias-W5-Utilities (annotation exporter, compute metrics, helpers,...)
 RUN apt-get update && apt-get install libgeos-dev -y && apt-get clean
 RUN git clone https://github.com/Neubias-WG5/neubiaswg5-utilities.git && \
-    cd /neubiaswg5-utilities && git checkout tags/v0.7.0 && pip install .
+    cd /neubiaswg5-utilities && git checkout tags/v0.8.0 && pip install .
 
 # Get DiademMetric.jar and JSAP-2.1.jar files to compute DIADEM metric
 RUN chmod +x /neubiaswg5-utilities/bin/*
